@@ -1,0 +1,692 @@
+<?php
+    include('../config/config.php');
+    
+        // displaying category 
+        function getcategory() {
+            global $conn;
+            $select_cate = "SELECT * FROM tbl_category";
+            $result_cate = mysqli_query($conn,$select_cate);
+            while($row_data = mysqli_fetch_assoc($result_cate)) {
+                    $cate_name = $row_data['cate_name'];
+                    $cate_id = $row_data['cate_id'];
+                    echo "<li><a href='product.php?category=$cate_id'><label>$cate_name</label></a></li>";
+                }
+            }
+
+        // display status
+        function getstatus() {
+            global $conn; 
+            echo"<li><a href='product.php?status=0'><label>Limited Edition</label></a></li>";
+            echo"<li><a href='product.php?status=1'><label>Online Only</label></a></li>";
+            echo"<li><a href='product.php?status=2'><label>Sale off</label></a></li>";
+            echo"<li><a href='product.php?status=3'><label>New Arrival</label></a></li>";
+        }
+
+        // display color 
+        function getcolor(){
+            global $conn; 
+            echo "<li><label>Jet Black</label></li>";
+            echo "<li><label>White</label></li>";
+            echo "<li><label>Offwhite/Gum</label></li>";
+            echo "<li><label>Bluewash</label></li>";
+            echo "<li><label>Corluray Mix</label></li>";
+            echo "<li><label>Golden Orange</label></li>";
+            echo "<li><label>Snow White</label></li>";
+            echo "<li><label>Vibrant Orange</label></li>";
+            echo "<li><label>Offwhite</label></li>";
+            echo "<li><label>Black/White</label></li>";
+            echo "<li><label>Tie Dye</label></li>";
+            echo "<li><label>Black/Brown</label></li>";
+            echo "<li><label>Red</label></li>";
+        }
+
+
+        //getting products
+        function getproduct() {
+            global $conn;
+            
+            // condition to check isset or not 
+            if(!isset($_GET['category'])) {
+                if(!isset($_GET['data_gender'])) {
+                    if(!isset($_GET['status'])) {
+                        // rand() hiển thị ngẫu nhiên
+                        // BƯỚC 2: TÌM TỔNG SỐ RECORDS
+                        $select_query="SELECT count(product_id) as total from tbl_product";
+                        $result_query=mysqli_query($conn,$select_query);
+                        $row=mysqli_fetch_assoc($result_query);
+                        $total_records = $row['total'];
+        
+                        // BƯỚC 3: TÌM LIMIT VÀ CURRENT_PAGE
+                        $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+                        $limit = 6; 
+        
+                        // BƯỚC 4: TÍNH TOÁN TOTAL_PAGE VÀ START
+                        // tổng số trang
+                        $total_page = ceil($total_records / $limit);
+                        // Giới hạn current_page trong khoảng 1 đến total_page
+                        if ($current_page > $total_page){
+                            $current_page = $total_page;
+                        }
+                        else if ($current_page < 1){
+                            $current_page = 1;
+                        }             
+                        // Tìm Start
+                        $start = ($current_page - 1) * $limit;
+                        // BƯỚC 5: TRUY VẤN LẤY DANH SÁCH SẢN PHẨM
+                        // Có limit và start rồi thì truy vấn CSDL lấy danh sách SẢN PHẨM
+                        $result_query = mysqli_query($conn, "SELECT * FROM tbl_product LIMIT $start, $limit");
+                        // PHẦN HIỂN THỊ SẢN PHẨM
+                        // BƯỚC 6: HIỂN THỊ DANH SÁCH SẢN PHẨM                                                                  
+                        while($row=mysqli_fetch_assoc($result_query)) {
+                            $product_id = $row['product_id'];
+                            $product_name = $row['product_name'];
+                            $product_color = $row['product_color'];
+                            $product_price = number_format($row['product_price'], 0, '', '.');
+                            $img = $row['img'];
+                            $img_hover = $row['img_hover'];
+                            $s = "";
+                            // Khi status = 0 là Limited Edition, 1 là Online Only, 2 là Sale off, 3 là New Arrival
+                            if($row["status"] == 0) {
+                                $s = "<p style='color:red'>Limited Editio</p>";
+                            }
+                            elseif($row["status"] == 1) {
+                                $s = "<p style='color:green'>Online Only</p>";
+                            }
+                            elseif($row["status"] == 2) {
+                                $s = "<p style='color:black'>Sale off</p>";   
+                            }
+                            else {
+                                $s = "<p style='color:#f15e2c'>New Arrival</p>";   
+                            }     
+                            echo "
+                                <div class='col-sm-6 col-md-4 col-lg-4 list-item'>
+                                    <div class='item img-thumbnail'>
+                                        <a href='product_detail.php?product_id=$product_id'>
+                                            <img src='./../admin/quanlysanpham/upload/$img' alt='' class='img-item'>
+                                            <img src='./../admin/quanlysanpham/upload/$img_hover' alt='' class='img-item-hover'>
+                                        </a>
+                                    </div>
+                                    <div class='btn-buy'>
+                                        <a href='product.php?add_to_cart=$product_id' class='btn btn-buy-now'>THÊM VÀO GIỎ HÀNG</a>
+                                    </div>
+                                    <div class='caption'>
+                                        <h3 class='type'>$s</h3>
+                                        <h3 class='name'>
+                                            <a href='product_detail.php?product_id=$product_id' >$product_name</a>
+                                        </h3>
+                                        <h3 class='color'>$product_color</h3>
+                                                
+                                        <h3 class='price'>$product_price VNĐ</h3>
+                                    </div>
+                                </div>";  
+                            
+                                // BƯỚC 7: HIỂN THỊ PHÂN TRANG
+                            }
+                                echo "<div class='row pagination'>";
+                                        for ($i = 1; $i <= $total_page; $i++){
+                                            if ($i == $current_page){
+                                                echo '<span>'.$i.'</span>' ;
+                                            }
+                                            else{
+                                                echo '<a href="product.php?page='.$i.'">'.$i.'</a>  ';
+                                            }
+                                        }
+                                echo "</div>";
+                            
+                    }                      
+                }
+            }
+        }
+        
+
+        // getting unique category
+        function get_unique_cate() {
+            global $conn; 
+            // condition to check isset or not 
+            if(isset($_GET['category'])) {
+                if(!isset($_GET['data_gender'])) {
+                    if(!isset($_GET['status'])) {
+                        $cate_id = $_GET['category'];
+                        $select_query="SELECT * FROM tbl_product where cate_id=$cate_id";
+                        $result_query=mysqli_query($conn,$select_query);
+                        $num_of_rows=mysqli_num_rows($result_query);
+                        if($num_of_rows == 0) {
+                            echo "<h2>Không có sản phẩm nào!</h2>";
+                        }
+
+                        // $row=mysqli_fetch_assoc($result_query);
+                        while($row=mysqli_fetch_assoc($result_query)) {
+                            $product_id = $row['product_id'];
+                            $product_name = $row['product_name'];
+                            $product_color = $row['product_color'];
+                            $product_price = number_format($row['product_price'], 0, '', '.');
+                            $img = $row['img'];
+                            $img_hover = $row['img_hover'];
+                            $s = "";
+                            // Khi status = 0 là Limited Edition, 1 là Online Only, 2 là Sale off, 3 là New Arrival
+                            if($row["status"] == 0) {
+                                $s = "<p style='color:red'>Limited Editio</p>";
+                            }
+                            elseif($row["status"] == 1) {
+                                $s = "<p style='color:green'>Online Only</p>";
+                            }
+                            elseif($row["status"] == 2) {
+                                $s = "<p style='color:black'>Sale off</p>";   
+                            }
+                            else {
+                                $s = "<p style='color:#f15e2c'>New Arrival</p>";   
+                            }     
+                            echo "
+                                <div class='col-sm-6 col-md-4 col-lg-4 list-item'>
+                                    <div class='item img-thumbnail'>
+                                        <a href='product_detail.php?product_id=$product_id'>
+                                            <img src='./../admin/quanlysanpham/upload/$img' alt='' class='img-item'>
+                                            <img src='./../admin/quanlysanpham/upload/$img_hover' alt='' class='img-item-hover'>
+                                        </a>
+                                    </div>
+                                    <div class='btn-buy'>
+                                        <a href='product.php?add_to_cart=$product_id' class='btn btn-buy-now'>THÊM VÀO GIỎ HÀNG</a>
+                                    </div>
+                                    <div class='caption'>
+                                        <h3 class='type'>$s</h3>
+                                        <h3 class='name'>
+                                            <a href='product_detail.php?product_id=$product_id' >$product_name</a>
+                                        </h3>
+                                        <h3 class='color'>$product_color</h3>
+                                        <h3 class='price'>$product_price VNĐ</h3>
+                                    </div>
+                                </div>";                          
+                        }
+                    }   
+                }
+            }
+        }
+
+
+                // hiển thị sản phẩm theo trạng thái
+                function get_unique_status() {
+                    global $conn; 
+                    // condition to check isset or not 
+                    if (isset($_GET['status']) && in_array($_GET['status'], ['0', '1', '2', '3'])) {
+                        $status = mysqli_real_escape_string($conn, $_GET['status']);
+                        $select_query = "SELECT * FROM tbl_product WHERE status = $status";
+                
+                        $result_query = mysqli_query($conn, $select_query);
+                        $num_of_rows = mysqli_num_rows($result_query);
+                
+                        if ($num_of_rows == 0) {
+                            echo "<h2>Không có sản phẩm nào!</h2>";
+                        }           
+                        else {
+                                    while($row=mysqli_fetch_assoc($result_query)) {
+                                        $product_id = $row['product_id'];
+                                        $product_name = $row['product_name'];
+                                        $product_color = $row['product_color'];
+                                        $product_price = number_format($row['product_price'], 0, '', '.');
+                                        $img = $row['img'];
+                                        $img_hover = $row['img_hover'];
+                                        $s = "";
+                                        // Khi status = 0 là Limited Edition, 1 là Online Only, 2 là Sale off, 3 là New Arrival
+                                        if($row["status"] == 0) {
+                                            $s = "<p style='color:red'>Limited Editio</p>";
+                                        }
+                                        elseif($row["status"] == 1) {
+                                            $s = "<p style='color:green'>Online Only</p>";
+                                        }
+                                        elseif($row["status"] == 2) {
+                                            $s = "<p style='color:black'>Sale off</p>";   
+                                        }
+                                        else {
+                                            $s = "<p style='color:#f15e2c'>New Arrival</p>";   
+                                        }     
+                                        echo "
+                                            <div class='col-sm-6 col-md-4 col-lg-4 list-item'>
+                                                <div class='item img-thumbnail'>
+                                                    <a href='product_detail.php?product_id=$product_id'>
+                                                        <img src='./../admin/quanlysanpham/upload/$img' alt='' class='img-item'>
+                                                        <img src='./../admin/quanlysanpham/upload/$img_hover' alt='' class='img-item-hover'>
+                                                    </a>
+                                                </div>
+                                                <div class='btn-buy'>
+                                                    <a href='product.php?add_to_cart=$product_id' class='btn btn-buy-now'>THÊM VÀO GIỎ HÀNG</a>
+                                                </div>
+                                                <div class='caption'>
+                                                    <h3 class='type'>$s</h3>
+                                                    <h3 class='name'>
+                                                        <a href='product_detail.php?product_id=$product_id' >$product_name</a>
+                                                    </h3>
+                                                    <h3 class='color'>$product_color</h3>
+                                                            
+                                                    <h3 class='price'>$product_price VNĐ</h3>
+                                                </div>
+                                            </div>";           
+                                    }               
+                                }
+                            }
+                        }
+        
+        
+        // hiển thị sản phẩm theo giới tính
+            function get_unique_gender() {
+                global $conn;
+            
+                if (isset($_GET['data_gender']) && ($_GET['data_gender'] == 'men' || $_GET['data_gender'] == 'women')) {
+                    // $gender = mysqli_real_escape_string($conn, $_GET['data_gender']); có nhiệm vụ bảo vệ chống lại tấn công SQL injection bằng cách xử lý chuỗi dữ liệu trước khi sử dụng nó trong một truy vấn SQL
+                    // chuỗi đầu vào là $_GET['data_gender'] và chuỗi đã được xử lý an toàn được gán cho biến $gender
+                    $gender = mysqli_real_escape_string($conn, $_GET['data_gender']);
+                    $select_query = "SELECT * FROM tbl_product WHERE gender = '$gender'";
+                    if (!isset($_GET['category']) && !isset($_GET['status'])) {
+                        $result_query = mysqli_query($conn, $select_query);
+                        while($row=mysqli_fetch_assoc($result_query)) {
+                            $product_id = $row['product_id'];
+                            $product_name = $row['product_name'];
+                            $product_color = $row['product_color'];
+                            $product_price = number_format($row['product_price'], 0, '', '.');
+                            $img = $row['img'];
+                            $img_hover = $row['img_hover'];
+                            $s = "";
+                            // Khi status = 0 là Limited Edition, 1 là Online Only, 2 là Sale off, 3 là New Arrival
+                            if($row["status"] == 0) {
+                                $s = "<p style='color:red'>Limited Editio</p>";
+                            }
+                            elseif($row["status"] == 1) {
+                                $s = "<p style='color:green'>Online Only</p>";
+                            }
+                            elseif($row["status"] == 2) {
+                                $s = "<p style='color:black'>Sale off</p>";   
+                            }
+                            else {
+                                $s = "<p style='color:#f15e2c'>New Arrival</p>";   
+                            }     
+                            echo "
+                                <div class='col-sm-6 col-md-4 col-lg-4 list-item'>
+                                    <div class='item img-thumbnail'>
+                                        <a href='product_detail.php?product_id=$product_id'>
+                                            <img src='./../admin/quanlysanpham/upload/$img' alt='' class='img-item'>
+                                            <img src='./../admin/quanlysanpham/upload/$img_hover' alt='' class='img-item-hover'>
+                                        </a>
+                                    </div>
+                                    <div class='btn-buy'>
+                                        <a href='product.php?add_to_cart=$product_id' class='btn btn-buy-now'>THÊM VÀO GIỎ HÀNG</a>
+                                    </div>
+                                    <div class='caption'>
+                                        <h3 class='type'>$s</h3>
+                                        <h3 class='name'>
+                                            <a href='product_detail.php?product_id=$product_id' >$product_name</a>
+                                        </h3>
+                                        <h3 class='color'>$product_color</h3>
+                                                
+                                        <h3 class='price'>$product_price VNĐ</h3>
+                                    </div>
+                                </div>";                        
+                            }
+                        }
+                    }
+                }
+        
+                
+            
+
+
+        // chi tiết sản phẩm
+        function get_product_detail() {
+            global $conn;
+
+            if (isset($_GET['product_id'])) {
+                $product_id = $_GET['product_id'];
+                $select_query="SELECT * FROM `tbl_product` where product_id=$product_id";
+                $result_query=mysqli_query($conn,$select_query);
+                // $row=mysqli_fetch_assoc($result_query);
+                while($row=mysqli_fetch_assoc($result_query)) {
+                    $product_name = $row['product_name'];
+                    $product_color = $row['product_color'];
+                    $product_price = number_format($row['product_price'], 0, '', '.');
+                    $product_code = $row['product_code'];
+                    $img = $row['img'];
+                    $img_hover = $row['img_hover'];
+                    $product_gender = $row['gender'];
+                    $s = "";
+                    $product_quantity = $row['product_quantity'];
+                    $product_desc = $row['product_desc'];
+                    // Khi status = 0 là Limited Edition, 1 là Online Only, 2 là Sale off, 3 là New Arrival
+                    if($row["status"] == 0) {
+                        $s = "Limited Editio";
+                    }
+                    elseif($row["status"] == 1) {
+                        $s = "Online Only";
+                    }
+                    elseif($row["status"] == 2) {
+                        $s = "Sale off";   
+                    }
+                    else {
+                        $s = "New Arrival";   
+                    }
+                    
+                    echo "
+                        <div class='prd_detail container-fluid'>
+                            <div class='row'>
+                                <div class='col-md-6 prd-left'>
+                                <div id='carouselExampleAutoplaying' class='carousel slide' data-bs-ride='carousel'>
+                                    <div class='carousel-inner'>
+                                        <div class='carousel-item active'>
+                                        <img src='./../admin/quanlysanpham/upload/$img' class='d-block w-100' alt='...'>
+                                        </div>
+                                        <div class='carousel-item'>
+                                        <img src='./../admin/quanlysanpham/upload/$img_hover' class='d-block w-100' alt='...'>
+                                        </div>
+                                    </div>
+                                    <button class='carousel-control-prev' type='button' data-bs-target='#carouselExampleAutoplaying' data-bs-slide='prev'>
+                                        <span class='carousel-control-prev-icon' aria-hidden='true'></span>
+                                        <span class='visually-hidden'>Previous</span>
+                                    </button>
+                                    <button class='carousel-control-next' type='button' data-bs-target='#carouselExampleAutoplaying' data-bs-slide='next'>
+                                        <span class='carousel-control-next-icon' aria-hidden='true'></span>
+                                        <span class='visually-hidden'>Next</span>
+                                    </button>
+                                    </div>
+                                </div>
+                                <div class='col-md-6 prd-right'>
+                                    <h4>$product_name</h4>
+                                    <h5>THÔNG TIN SẢN PHẨM:</h5>
+                                    <div class='prd_code'>Mã sản phẩm: <span>$product_code</span></div>
+                                    <div class='prd_status'>Tình trạng: <span>$s</span></div>
+                                    <div class='prd_color'>Màu sắc: <span>$product_color</span></div>
+                                    <div class='prd_gender'>Giới tính: <span>$product_gender</span></div>
+                                    <div class='prd_price'>Giá: <span>$product_price VNĐ</span></div>
+                                    <div class='prd_quantity'>Số lượng: <span>$product_quantity</span></div>
+                                    <div class='prd_desc'>
+                                        Mô tả:
+                                        <p>$product_desc</p>
+                                    </div>
+                                    <button type='submit'><a href='product.php?add_to_cart=$product_id'>THÊM VÀO GIỎ HÀNG</a></button>
+                    
+                                </div>
+                            </div>
+                        </div>";
+                }
+            }
+
+            
+        }
+            
+        // Hiển thị tin tức trang chủ
+
+        function get_new() {
+            global $conn; 
+
+            $select_query = "SELECT * FROM tbl_news";
+            $result_query = mysqli_query($conn, $select_query);
+            while($row=mysqli_fetch_assoc($result_query)) {
+                    $new_id = $row["new_id"];
+                    $title = $row["title"];
+                    $news_desc = $row["news_desc"];
+                    $img = $row["img"];
+                    echo "
+                        <div class='col-sm-6 col-md-6 col-lg-6 post-item'>
+                            <a href='news.php?new_id=$new_id'>
+                                <img src='./../admin/quanlytintuc/upload/$img' alt=''>
+                            </a>
+                            <h3 class='post-title'>
+                                <a href='news.php?new_id=$new_id'>$title</a>
+                            </h3>
+                            <h3 class='post-desc'>$news_desc</h3>
+                            <h3 class='post-detail'>
+                                <a href='news.php?new_id=$new_id'>Đọc thêm</a>
+                            </h3>
+                        </div>";
+                  }
+        }
+
+        // Hiển thị chi tiết tin tức
+        function get_new_detail() {
+            global $conn;
+
+            if (isset($_GET['new_id'])) {
+                $new_id = $_GET['new_id'];
+                $select_query="SELECT * FROM `tbl_news` where new_id=$new_id";
+                $result_query=mysqli_query($conn,$select_query);
+                // $row=mysqli_fetch_assoc($result_query);
+                while($row=mysqli_fetch_assoc($result_query)) {
+                    $new_id = $row["new_id"];
+                    $title = $row["title"];
+                    $news_desc = $row["news_desc"];
+                    $img = $row["img"];
+                    $img2 = $row["img2"];
+                    $img3 = $row["img3"];
+                    $img_note = $row["img_note"];
+                    $cont1 = $row["cont1"];
+                    $cont2 = $row ["cont2"];
+                    $cont3 = $row ["cont3"];
+                    $post_date = $row["date"];
+                    $author = $row["author"];
+        
+                    echo "
+                        <div class='news-detail-banner container-fluid'>
+                        <img src='./../admin/quanlytintuc/upload/$img' alt=''>
+                        </div>
+            
+                        <div class='news-detail-content container-fluid'>
+                          <div class='news-detail-title container-fluid'>
+                            <h3 class='title'>$title</h3>
+                          </div>
+            
+                          <div class='news-detail-date container-fluid'>
+                              <span class='date'>$post_date |</span> $author
+                          </div>
+            
+                          <div class='news-detail-cont container-fluid'>
+                            <br>
+                              <p>$cont1</p>
+                            <br>
+                              <p>$cont2</p>
+                            <br>
+                              <p>$cont3</p>
+                            <br>
+                            <div class='row cont-img'>
+                              <div class='col-sm-6 col-md-6 left'>
+                                  <img src='./../admin/quanlytintuc/upload/$img2' alt=''>
+                              </div>
+                              <div class='col-sm-6 col-md-6 right'>
+                                  <img src='./../admin/quanlytintuc/upload/$img3' alt=''>
+                              </div>
+                            </div>  
+                            <br>
+                            <div class='img-note'>$img_note</div>
+                          </div>
+                        </div>  
+                    ";        
+                }
+            }
+        }
+
+
+        // searching product
+        function search_product() {
+            global $conn;        
+            $search_query = "";    
+            if(isset($_POST['btn_search'])){
+                $key = $_POST['key'];
+                $search_query="SELECT * FROM tbl_product where product_name like '%".$key."%' ";
+            }
+            else {
+                $search_query = "SELECT * FROM tbl_product";
+            }
+            $result_query = mysqli_query($conn, $search_query);    
+            if(mysqli_num_rows($result_query) == 0) {
+                echo "<h2>No results match. No products found on this category!</h2>";
+            }            
+            if (mysqli_num_rows($result_query) > 0) {
+                while($row=mysqli_fetch_assoc($result_query)) {
+                    $product_id = $row['product_id'];
+                    $product_name = $row['product_name'];
+                    $product_color = $row['product_color'];
+                    $product_price = number_format($row['product_price'], 0, '', '.');
+                    $img = $row['img'];
+                    $img_hover = $row['img_hover'];
+                    $s = "";
+                    // Khi status = 0 là Limited Edition, 1 là Online Only, 2 là Sale off, 3 là New Arrival
+                    if($row["status"] == 0) {
+                    $s = "<p style='color:red'>Limited Editio</p>";
+                    }
+                    elseif($row["status"] == 1) {
+                        $s = "<p style='color:green'>Online Only</p>";
+                    }
+                    elseif($row["status"] == 2) {
+                        $s = "<p style='color:black'>Sale off</p>";   
+                    }
+                    else {
+                        $s = "<p style='color:#f15e2c'>New Arrival</p>";   
+                    }     
+                    echo "
+                        <div class='col-sm-6 col-md-4 col-lg-4 list-item'>
+                            <div class='item img-thumbnail'>
+                                <a href='product_detail.php?product_id=$product_id'>
+                                    <img src='./../admin/quanlysanpham/upload/$img' alt='' class='img-item'>
+                                    <img src='./../admin/quanlysanpham/upload/$img_hover' alt='' class='img-item-hover'>
+                                </a>
+                            </div>
+                            <div class='btn-buy'>
+                                <a href='product.php?add_to_cart=$product_id' class='btn btn-buy-now'>THÊM VÀO GIỎ HÀNG</a>
+                            </div>
+                            <div class='caption'>
+                                <h3 class='type'>$s</h3>
+                                <h3 class='name'>
+                                    <a href='product_detail.php?product_id=$product_id' >$product_name</a>
+                                </h3>
+                                <h3 class='color'>$product_color</h3>
+                                        
+                                <h3 class='price'>$product_price VNĐ</h3>
+                            </div>
+                        </div>";                          
+                    
+                }
+            }
+        }
+        
+
+        // get IP Address function
+        function getIPAddress() {  
+            //Hàm kiểm tra xem có tồn tại địa chỉ IP từ "share internet" không. Điều này thường được sử dụng khi người dùng truy cập trang web từ một mạng chia sẻ 
+             if(!empty($_SERVER['HTTP_CLIENT_IP'])) {  
+                        $ip = $_SERVER['HTTP_CLIENT_IP'];  
+                }  
+            //Truy cập trang web qua một proxy server  
+            elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {  
+                        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];  
+             }  
+            //Đây là địa chỉ IP thực của máy tính hoặc thiết bị kết nối đến trang web  
+            else{  
+                     $ip = $_SERVER['REMOTE_ADDR'];  
+             }  
+             return $ip;  
+        }  
+        // $ip = getIPAddress();  
+        // echo 'User Real IP Address - '.$ip;  
+        
+
+        // cart function
+        function cart() {
+            if(isset($_GET['add_to_cart'])) {
+                global $conn;
+                if (!isset($_SESSION['username'])) {
+                    header(location: "../user_area/login/php");
+                }
+                else {
+                    $get_ip_add = getIPAddress();
+                    $get_product_id = $_GET['add_to_cart'];
+                    $select_query = "SELECT * from  `tbl_cart_detail` where ip_address='$get_ip_add' and product_id=$get_product_id";
+                    $result_query = mysqli_query($conn, $select_query);
+                    $num_of_rows = mysqli_num_rows($result_query);
+                    if ($num_of_rows > 0) {
+                        echo "<script>alert('Sản phẩm này đã có trong giỏ hàng')</script>";
+                        echo "<script>window.open('cart.php','_self')</script>";
+                    } 
+                    else {
+                        $insert_query = "INSERT INTO `tbl_cart_detail` (product_id, ip_address, quantity)
+                                            VALUES ($get_product_id,'$get_ip_add',1)";
+                        $result_query = mysqli_query($conn, $insert_query);
+                        echo "<script>alert('Sản phẩm đã được thêm vào giỏ hàng thành công')</script>";
+                        echo "<script>window.open('cart.php','_self')</script>";
+                    }
+                }
+            }
+        }
+
+        // function to get cart item numbers
+        function cart_item() {
+            if(isset($_GET['add_to_cart'])) {
+                global $conn;
+                $get_ip_add = getIPAddress();
+                $select_query = "SELECT * from  `tbl_cart_detail` where ip_address='$get_ip_add'";
+                $result_query = mysqli_query($conn, $select_query);
+                $count_cart_item = mysqli_num_rows($result_query);
+            }
+            else {
+                global $conn;
+                $get_ip_add = getIPAddress();
+                $select_query = "SELECT * from  `tbl_cart_detail` where ip_address='$get_ip_add'";
+                $result_query = mysqli_query($conn, $select_query);
+                $count_cart_item = mysqli_num_rows($result_query);
+                }
+            echo $count_cart_item;
+        }
+        
+        // total price function
+        function total_cart_price() {
+            global $conn;
+            $get_ip_add = getIPAddress();
+            $total_price = 0;
+            $cart_query = "SELECT * FROM `tbl_cart_detail` WHERE ip_address = '$get_ip_add'";
+            $result = mysqli_query($conn, $cart_query);
+            while($row=mysqli_fetch_array($result)) {
+                $product_id = $row['product_id'];
+                $select_product = "SELECT * FROM `tbl_product` WHERE product_id = '$product_id'";            
+                $result_product = mysqli_query($conn, $select_product);
+                while($row_prd_price=mysqli_fetch_array($result_product)) {
+                    $product_price = array($row_prd_price['product_price']);
+                    $product_values = array_sum($product_price);
+                    $total_price += $product_values;
+                }                
+            }
+            echo $total_price;
+        }
+
+
+        function checkout() {
+            global $conn;
+            if(isset($_GET["task"]) && $_GET["task"]=="checkout") {
+                if(isset($_SESSION['username'])) {
+                    $user_ip = $_GET['ip'];
+                    $select_query="SELECT * FROM tbl_users where user_ip ='$user_ip'";
+                    $result_query=mysqli_query($conn,$select_query);
+                    while($row=mysqli_fetch_assoc($result_query)) {
+                        $user_name = $row['user_name'];
+                        $user_mobile = $row['user_mobile'];
+                        $user_address = $row['user_address'];
+                        $user_email = $row['user_email'];
+
+                        echo "
+                                <p class='form-row form-row-wide'>
+                                    <input type='text' class='input-text' id='inputSuccess2' placeholder='HỌ TÊN' name='customerName' value = $user_name>
+                                </p>
+                                <p class='form-row form-row-wide'>
+                                    <input type='text' class='input-text' id='inputSuccess2' placeholder='Số điện thoại' name='customerPhone' value = $user_mobile>
+                                </p>
+                                <p class='form-row form-row-wide'>
+                                    <input type='text' class='input-text' id='inputSuccess2' placeholder='Email' name='customerEmail' value = $user_email>
+                                </p>
+                                <p class='form-row form-row-wide'>
+                                    <textarea class='input-text' id='inputError2' placeholder='Địa chỉ' name='customerAddress'>$user_address</textarea>
+                                </p>
+                                <p class='form-row form-row-wide'>
+                                    <input type='checkbox' class='information'>
+                                    <label class='checkbox'>Cập nhật các thông tin mới nhất về chương trình từ Ananas</label>
+                                </p>
+                        ";
+                    }
+                }
+        
+            } 
+        }
+
+    ?>

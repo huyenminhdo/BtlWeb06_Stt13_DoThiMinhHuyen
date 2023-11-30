@@ -1,0 +1,30 @@
+.button {
+    text-align: center;
+    /* display: flex; */
+    justify-content: space-evenly;
+    display: inline;
+}
+
+button {
+    background-color: aliceblue;
+    border: none;
+    padding: 10px;
+}
+
+button a {
+    text-decoration: none;
+    color: #f15e2c;
+    font-size: 20px;
+}
+
+h1,h2{
+    margin-top: 30px;
+    text-align: center;
+}
+
+.row {
+    margin-top: 50px;
+}
+img {
+    width: 70px;
+}

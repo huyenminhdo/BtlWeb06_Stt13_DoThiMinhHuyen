@@ -1,0 +1,83 @@
+#order h3 {
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #ff5f17;
+    margin-top: 30px;
+    font-size: 30px;
+    font-weight: bold;
+}
+.order {
+    max-width: 940px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+.title-success {
+    border-bottom: #000 2px solid;
+    height: 1px;
+    margin: 40px 0px;
+}
+
+.title-success img{
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+}
+
+.going {
+    margin-top: 100px;
+    margin-bottom: 10px;
+    font-style: italic;
+    font-size: 17px;
+}
+
+.content-order {
+    margin-bottom: 30px;
+    font-size: 19px;
+    font-weight: bold;
+    font-family: serif;
+
+}
+.content-order span{
+    margin-left: 10px;
+}
+
+.content-order .order-code span {
+    color: #f15f17;
+    font-weight: bold;
+}
+
+.content-order .username-order span,
+.content-order .userphone-order span,
+.content-order .useremail-order span,
+.content-order .useradd-order span {
+    font-weight: normal;
+}
+
+
+.thanku,
+.continue-purchase {
+    text-align: center;
+}
+
+.thanku p {
+    font-size: 18px;
+    margin-top: 25px;
+    font-weight: bold;
+}
+
+.continue-purchase button{
+    margin-top: 50px;
+    padding: 10px 60px;
+    font-size: 18px;
+    background-color: #ff5f17;
+    font-weight: 700;
+    border: 0px;
+    color: #fff;
+}
+
+
+
+
+
+

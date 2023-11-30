@@ -1,0 +1,21 @@
+STT 13
+1. Đỗ Thị Minh Huyền - 2121051221 (Nhóm trưởng)
+2. Vũ Thị Ngọc - 2121051202 
+3. Hoàng Đức Mạnh - 2121051233
+
+Link github: https://github.com/huyenminhdo/BtlWeb06_Stt13_DoThiMinhHuyen.git 
+
+Phân công nhiệm vụ:
+- Đỗ Thị Minh Huyền
+    + Chia nhiệm vụ
+    + Code phần thân index.html
+    + Code phần prd-right (product.html)
+    + Code login.html
+- Hoàng Đức Mạnh
+    + Code header
+    + Code prd-left (product.html)
+    + Code responsive.css
+- Vũ Thị Ngọc
+    + Code footer
+    + Code register.html
+    + Code app.js
