@@ -7,7 +7,7 @@
     font-weight: bold;
 }
 .order {
-    max-width: 940px;
+    max-width: 1200px;
     margin-top: 100px;
     margin-bottom: 100px;
 }
@@ -34,39 +34,51 @@
 .content-order {
     margin-bottom: 30px;
     font-size: 19px;
-    font-weight: bold;
     font-family: serif;
 }
 
-.content-order h4 {
-    font-size: bold;
-    font-style: italic;
-    margin-top: 20px;
+.content-order table {
+    border: 2px solid #ccc;
+    text-align: center;
+    font-size: 16px;
 }
 
-.content-order p, h5 {
-    margin-left: 50px;
+.content-order table .infor {
+    border: 2px solid #ccc;
+    background-color: #f1f1f1;
 }
 
-.content-order span{
-    margin-left: 10px;
+.content-order table .infor.order-code {
+    width: 12%;
 }
 
-.content-order h5,
-.content-order .order-code span,
-.content-order .order-status span {
-    color: #f15f17;
-    font-weight: bold;
+.content-order table .infor.order-name {
+    width: 13%;
 }
 
-.content-order .username-order span,
-.content-order .userphone-order span,
-.content-order .useremail-order span,
-.content-order .useradd-order span,
-.content-order .order-status span {
-    font-weight: normal;
+.content-order table .infor.order-phone {
+    width: 13%;
 }
 
+.content-order table .infor.order-date {
+    width: 13%;
+}
+
+.content-order table .infor.order-total {
+    width: 12%;
+}
+
+.content-order table .infor.order-add {
+    width: 19%;
+}
+
+.content-order table .infor.order-note {
+    width: 18%;
+}
+
+.content-order table .order {
+    border: 1px solid #ccc;
+}
 
 .thanku,
 .continue-purchase {
