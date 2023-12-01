@@ -31,7 +31,7 @@
     $result_cart_price = mysqli_query($conn,$cart_query_price);
 
     // Trạng thái đơn hàng
-    $status = 'Đặt hàng thành công';
+    $status = 'Thành công';
 
     $count_product = mysqli_num_rows($result_cart_price);
     while($row_price = mysqli_fetch_array($result_cart_price)) {
@@ -113,13 +113,29 @@
 
             <div class="row content-order">
                 <?php
+                echo"
+                     <table class='table'>
+                     <thead>
+                         <tr>
+                             <th class = 'infor order-code'>Mã đơn hàng</th>
+                             <th class = 'infor order-name'>Họ tên</th>
+                             <th class = 'infor order-phone'>Điện thoại</th>
+                             <th class = 'infor order-date'>Ngày đặt</th>
+                             <th class = 'infor order-total'>Thành tiền</th>
+                             <th class = 'infor order-add'>Địa chỉ</th>
+                             <th class = 'infor order-note'>Ghi chú</th>
+                         </tr>
+                     </thead>
+                     <tbody>";
+
                 if(isset($_GET['user_id'])) {
                     $user_id = $_GET['user_id'];
-
                     $sql_order = "SELECT * FROM `tbl_order` where user_id = $user_id";
                     $result_order = mysqli_query($conn, $sql_order);
                     while($row=mysqli_fetch_array($result_order)) {
                         $status = $row['order_status'];
+                        $order_date = $row['order_date'];
+                        $order_total_price = $row['total_price'];
                         $order_code = $row['order_code'];
                         $order_id =$row['order_id'];
                         $sql_contact = "SELECT * FROM `tbl_user_contact` where order_code = $order_code";
@@ -130,21 +146,21 @@
                             $user_email = $row['user_email'];
                             $user_add = $row['user_address'];
                             $user_note = $row['user_note'];
-                        echo "
-                            <h4>Thông tin đơn hàng số:  $order_id</h4>
-                            <p class='order-code'>Mã đơn hàng: <span> $order_code</span></p>
-                            <p class='order-status'>Trạng thái đơn hàng: <span> $status</span></p>
-                            
-                            <h5>Thông tin người nhận:</h5>
-                            <p class='username-order'>Họ tên: <span> $user_name</span></p>
-                            <p class='userphone-order'>Điện thoại: <span> $user_phone</span></p>
-                            <p class='useremail-order'>Email: <span> $user_email</span></p>
-                            <p class='useradd-order'>Địa chỉ: <span> $user_add</span></p>
-                            <p class='user-note'>Ghi chú: <span> $user_note</span></p>
-                            ";
-               
+                            echo "
+                            <tr>
+                                <td class= 'order'>$order_code</td>
+                                <td class= 'order'>$user_name</td>
+                                <td class= 'order'>$user_phone</td>
+                                <td class= 'order'>$order_date</td>
+                                <td class= 'order'>".number_format($order_total_price, 0, ',', '.')." VND</td>
+                                <td class= 'order'>$user_add</td>
+                                <td class= 'order'>$user_note</td>
+                            </tr>";
                         }
-                    }    
+                    }
+                echo "
+                        </tbody>
+                    </table>";
                 }
                 ?>
             </div>
