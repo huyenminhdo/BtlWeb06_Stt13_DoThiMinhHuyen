@@ -7,19 +7,22 @@
   if(isset($_POST['complete_order'])) {
     $user_id = $_POST['user_id'];
     $user_ip = $_POST['user_ip'];
+    $user_name = $_POST['customerName'];
+    $user_phone = $_POST['customerPhone'];
+    $user_email = $_POST['customerEmail'];
     $user_address = $_POST['customerAddress'];
     $user_note = $_POST['customerNote'];
 
     $order_payment_method = $_POST['payment'];
-    // $order_payment_method = 'Tiền mặt';
 
-    // Cập nhật địa chỉ người dùng
-    $sql_update = "UPDATE tbl_users set user_address = '$user_address' where user_id =" .$user_id;
-    $result_update=mysqli_query($conn, $sql_update);
+    // mã hóa đơn ngẫu nhiên
+    $order_code = mt_rand(0,99999999);
+
 
     // Liên hệ người dùng
-    
-
+    $insert_user_contact = "INSERT INTO `tbl_user_contact` (user_id,order_code,user_name,user_email,user_phone,user_address,user_note)
+                                VALUES($user_id, $order_code, '$user_name', '$user_email', '$user_phone', '$user_address', '$user_note')";
+    $result_contact=mysqli_query($conn, $insert_user_contact);   
 
     $get_ip_address = getIPAddress();
     $total_price = 0;
@@ -27,9 +30,9 @@
     $cart_query_price = "SELECT * FROM `tbl_cart_detail` where ip_address = '$user_ip'";
     $result_cart_price = mysqli_query($conn,$cart_query_price);
 
-    // mã hóa đơn ngẫu nhiên
-    $order_code = mt_rand(0,9999);
-    $status = 'shipping to you';
+    // Trạng thái đơn hàng
+    $status = 'Đặt hàng thành công';
+
     $count_product = mysqli_num_rows($result_cart_price);
     while($row_price = mysqli_fetch_array($result_cart_price)) {
         $product_id=$row_price['product_id'];
@@ -67,9 +70,13 @@
         echo "<script>alert('Đã đặt hàng thành công')</script>";
     }
 
+
+    // Đặt hàng xong lưu thông tin người nhận
+    // Xóa sản phẩm trong giỏ hàng
+    $empty_cart = "DELETE FROM `tbl_cart_detail` WHERE ip_address='$get_ip_address'";
+    $result_delete = mysqli_query($conn, $empty_cart);
+
 }
-
-
 
 ?>
 <!DOCTYPE html>
@@ -105,11 +112,41 @@
             </div>    
 
             <div class="row content-order">
-                <p class="order-code">Mã sản phẩm: <span>99889</span></p>
-                <p class="username-order">Họ tên: <span>Huyền Nè</span></p>
-                <p class="userphone-order">Điện thoại: <span>010101010101</span></p>
-                <p class="useremail-order">Email: <span>huyenne@gmail.com</span></p>
-                <p class="useradd-order">Địa chỉ: <span>Hưng Hà, Thái Bình, Việt Nam</span></p>
+                <?php
+                if(isset($_GET['user_id'])) {
+                    $user_id = $_GET['user_id'];
+
+                    $sql_order = "SELECT * FROM `tbl_order` where user_id = $user_id";
+                    $result_order = mysqli_query($conn, $sql_order);
+                    while($row=mysqli_fetch_array($result_order)) {
+                        $status = $row['order_status'];
+                        $order_code = $row['order_code'];
+                        $order_id =$row['order_id'];
+                        $sql_contact = "SELECT * FROM `tbl_user_contact` where order_code = $order_code";
+                        $result_contact = mysqli_query($conn, $sql_contact);
+                        while($row=mysqli_fetch_array($result_contact)) {
+                            $user_name = $row['user_name'];
+                            $user_phone = $row['user_phone'];
+                            $user_email = $row['user_email'];
+                            $user_add = $row['user_address'];
+                            $user_note = $row['user_note'];
+                        echo "
+                            <h4>Thông tin đơn hàng số:  $order_id</h4>
+                            <p class='order-code'>Mã đơn hàng: <span> $order_code</span></p>
+                            <p class='order-status'>Trạng thái đơn hàng: <span> $status</span></p>
+                            
+                            <h5>Thông tin người nhận:</h5>
+                            <p class='username-order'>Họ tên: <span> $user_name</span></p>
+                            <p class='userphone-order'>Điện thoại: <span> $user_phone</span></p>
+                            <p class='useremail-order'>Email: <span> $user_email</span></p>
+                            <p class='useradd-order'>Địa chỉ: <span> $user_add</span></p>
+                            <p class='user-note'>Ghi chú: <span> $user_note</span></p>
+                            ";
+               
+                        }
+                    }    
+                }
+                ?>
             </div>
 
             <div class="row complete-order">
