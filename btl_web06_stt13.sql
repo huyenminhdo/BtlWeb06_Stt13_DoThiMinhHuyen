@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 01, 2023 lúc 05:23 PM
+-- Thời gian đã tạo: Th12 02, 2023 lúc 10:21 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -131,14 +131,6 @@ CREATE TABLE `tbl_order` (
   `order_status` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Đang đổ dữ liệu cho bảng `tbl_order`
---
-
-INSERT INTO `tbl_order` (`order_id`, `user_id`, `order_code`, `total_price`, `order_payment_method`, `order_date`, `order_status`) VALUES
-(1, 1, 32616154, 1410000, 'Thanh toán bằng Thẻ quốc tế / Thẻ nội địa / QR Code', '2023-12-01 16:03:03', 'Đặt hàng thành công'),
-(2, 1, 57565557, 290000, 'Thanh toán trực tiếp khi giao hàng', '2023-12-01 16:04:20', 'Đặt hàng thành công');
-
 -- --------------------------------------------------------
 
 --
@@ -202,13 +194,6 @@ CREATE TABLE `tbl_users` (
   `user_mobile` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Đang đổ dữ liệu cho bảng `tbl_users`
---
-
-INSERT INTO `tbl_users` (`user_id`, `user_name`, `user_email`, `user_password`, `user_ip`, `user_address`, `user_mobile`) VALUES
-(1, 'huyenne', 'dominhhuyen477@gmail.com', '$2y$10$IA8WIQ0pNbkXIO2LgkdZVeToX6iAIfQ9zdyoBQT1gNBYRnF8dUGt.', '::1', 'Hưng Hà, Thái Bình', '0123456789');
-
 -- --------------------------------------------------------
 
 --
@@ -225,14 +210,6 @@ CREATE TABLE `tbl_user_contact` (
   `user_note` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Đang đổ dữ liệu cho bảng `tbl_user_contact`
---
-
-INSERT INTO `tbl_user_contact` (`user_id`, `order_code`, `user_name`, `user_email`, `user_phone`, `user_address`, `user_note`) VALUES
-(1, 32616154, 'huyenne', 'dominhhuyen477@gmail.com', '0123456789', 'Thị trấn Hưng Hà, Thái Bình, Việt Nam', 'Đơn hàng được bàn giao cho đơn vị vận chuyển'),
-(1, 57565557, 'Minh Huyền', 'dominhhuyen477@gmail.com', '0123456789', 'Hưng Hà, Thái Bình', '');
-
 -- --------------------------------------------------------
 
 --
@@ -245,15 +222,6 @@ CREATE TABLE `tbl_user_order` (
   `product_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Đang đổ dữ liệu cho bảng `tbl_user_order`
---
-
-INSERT INTO `tbl_user_order` (`order_code`, `user_id`, `product_id`, `quantity`) VALUES
-(32616154, 1, 11, 1),
-(32616154, 1, 23, 2),
-(57565557, 1, 13, 1);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -327,7 +295,7 @@ ALTER TABLE `tbl_news`
 -- AUTO_INCREMENT cho bảng `tbl_order`
 --
 ALTER TABLE `tbl_order`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `tbl_product`
@@ -339,7 +307,7 @@ ALTER TABLE `tbl_product`
 -- AUTO_INCREMENT cho bảng `tbl_users`
 --
 ALTER TABLE `tbl_users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

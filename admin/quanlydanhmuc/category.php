@@ -35,10 +35,8 @@
             }
         }
     }
+   
     // Xóa dữ liệu
-    // task có thể thay đổi, tự đặt có thể là tên khác
-    // Xóa dữ liệu
-    // task có thể thay đổi, tự đặt có thể là tên khác
     if(isset($_GET["categories"]) && $_GET["categories"]=="delete") {
         $cate_id = $_GET["id"];
         $sql_delete = "delete from tbl_category where cate_id = " .$cate_id;
@@ -75,7 +73,7 @@
             <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
             <script src="../../assets/js/bootstrap.bundle.min.js"></script>  
             <link rel="stylesheet" href="../css/styleadmin.css">        
-            <title>Category</title>
+            <title>Categoris - Admin Dashboard</title>
     </head>
 
     <body>

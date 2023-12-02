@@ -8,12 +8,6 @@
             <ul class="menu">
               <li>
                 <a href="#">
-                  <img src="../assets/img/header/menu/icon_tra_cuu_don_hang.svg" alt=""> 
-                  Tra cứu đơn hàng
-                </a>
-              </li>
-              <li>
-                <a href="#">
                   <img src="../assets/img/header/menu/icon_tim_cua_hang.svg" alt="">
                   Tìm cửa hàng
                 </a>
@@ -24,6 +18,45 @@
                   Liên hệ
                 </a>
               </li>
+
+              <li>
+                <a href="../page/cart.php">
+                  <img src="../assets/img/header/menu/icon_gio_hang.svg" alt="">
+                  Giỏ hàng (<?php
+                    if (!isset($_SESSION['username'])) {echo"0";}
+                    else{ cart_item(); cart();}?>)
+                </a>
+              </li>
+
+              <li>
+                <?php
+                    if (!isset($_SESSION['username'])) {
+                        echo " 
+                        <a href='../user_area/login.php'>
+                        <img src='../assets/img/header/menu/icon_tra_cuu_don_hang.svg' alt=''> 
+                        Tra cứu đơn hàng
+                        </a>
+                        ";
+                      
+                    }
+                    
+                    else {
+                      $user_name = $_SESSION['username'];
+                      $sql = "SELECT * FROM tbl_users WHERE user_name = '$user_name'";
+                      $result = mysqli_query($conn, $sql);
+                      while($row=mysqli_fetch_array($result)) {
+                        $user_id = $row['user_id'];
+                        echo"
+                          <a href='../user_area/order.php?user_id=$user_id'>
+                          <img src='../assets/img/header/menu/icon_tra_cuu_don_hang.svg' alt=''> 
+                          Tra cứu đơn hàng
+                          </a>
+                        ";
+                      }
+                    }
+                ?>
+              </li>
+
               <li>
                 <?php
                   if (!isset($_SESSION['username'])) {
@@ -45,20 +78,7 @@
                   }
                 ?>
               </li>
-              <!-- <li>
-                <a href="../user_area/login.php">
-                  <img src="../assets/img/header/menu/icon_dang_nhap.svg" alt="">
-                  Đăng nhập
-                </a>
-              </li> -->
-              <li>
-                <a href="../page/cart.php">
-                  <img src="../assets/img/header/menu/icon_gio_hang.svg" alt="">
-                  Giỏ hàng (<?php
-                    if (!isset($_SESSION['username'])) {echo"0";}
-                    else{ cart_item(); cart();}?>)
-                </a>
-              </li>
+
             </ul>
           </div>
         </form>

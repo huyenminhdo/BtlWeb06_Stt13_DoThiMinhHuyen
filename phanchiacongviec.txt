@@ -1,21 +1,66 @@
+Phát triển ứng dụng Web nhóm 6
 STT 13
-1. Đỗ Thị Minh Huyền - 2121051221 (Nhóm trưởng)
-2. Vũ Thị Ngọc - 2121051202 
-3. Hoàng Đức Mạnh - 2121051233
-
 Link github: https://github.com/huyenminhdo/BtlWeb06_Stt13_DoThiMinhHuyen.git 
 
+Thành viên nhóm
+    1. Đỗ Thị Minh Huyền - 2121051221 (Nhóm trưởng)
+    2. Vũ Thị Ngọc - 2121051202 
+    3. Hoàng Đức Mạnh - 2121051233
+
+
 Phân công nhiệm vụ:
-- Đỗ Thị Minh Huyền
-    + Chia nhiệm vụ
-    + Code phần thân index.html
-    + Code phần prd-right (product.html)
-    + Code login.html
-- Hoàng Đức Mạnh
-    + Code header
-    + Code prd-left (product.html)
-    + Code responsive.css
-- Vũ Thị Ngọc
-    + Code footer
-    + Code register.html
-    + Code app.js
+
+Đỗ Thị Minh Huyền:
+    -Chia nhiệm vụ
+    -Giao diện
+        + index
+        + product
+        + news
+        + dashboard
+    -Chức năng
+        + index
+        + product
+        + hiển thị sản phẩm theo danh mục
+        + news
+        + product_detail
+        + thanh toán 
+        + đơn hàng
+        + Admin
+            ~ Thêm, xóa sản phẩm
+            ~ Thêm, xóa danh mục
+            ~ Thêm, xóa tin tức
+            ~ Xóa user
+
+Hoàng Đức Mạnh:
+    -Giao diện
+        + header
+        + contact
+        + checkcout
+        + login
+        + product_detail
+    -Chức năng
+        + hiển thị sản phẩm theo trạng thái
+        + search_product
+        + login
+        + header
+        + Admin:
+            ~ login
+            ~ hiển thị các đơn hàng đã được đặt (All orders)
+            ~ hiển thị người dùng đặt bao nhiêu đơn (List of orders users)
+        + 
+Vũ Thị Ngọc:
+    -Giao diện
+        + footer
+        + cart
+        + register
+        + cart&social
+    -Chức năng
+        + hiển thị sản phẩm theo giới tính
+        + giỏ hàng
+        + register
+        + cart&social
+        + logout
+        + Admin:
+            ~ Cập nhật sản phẩm
+            ~ Cập nhật danh mục
+            ~ Cập nhật tin tức

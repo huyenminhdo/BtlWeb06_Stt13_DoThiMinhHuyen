@@ -16,8 +16,9 @@
 
         if(mysqli_num_rows($result)>0) {    
             if(password_verify($password, $row_data['user_password'])) {
+                $user_id = $row['user_id'];
                 $_SESSION['username'] = $username;
-                $_SESSIION['user_id'] = $row_data['user_id'];
+                $_SESSION['user_id'] = $user_id;
                 echo "<script>alert('Đăng nhập thành công')</script>";
                 echo "<script>window.open('../page/product.php','_self')</script>";
 

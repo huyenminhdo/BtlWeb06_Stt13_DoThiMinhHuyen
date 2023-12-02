@@ -31,13 +31,13 @@
       <p class="msv">Mã sinh viên: <span>2121051221</span></p>
       <p class="nhom">Nhóm: <span>13</span></p>
       <p class="class">Môn: <span>Phát triển ứng dụng Web nhóm 6</span></p>
-      <p class="email">Email: <span>dohuyen477@gmail.com</span> </p>
       <p class="sdt">Điện thoại: <span>0358570803</span></p>
+      <p class="email">Email: <span>dohuyen477@gmail.com</span> </p>
     </div>
   </div>
   <div class="row member">
     <div class="col-4 avt">
-      <img src="" alt="">
+      <img src="../assets/img/member/VuNgoc.jpg" alt="" style="    padding-top: 25px;">
     </div>
 
     <div class="col-8 infor">
@@ -45,13 +45,13 @@
       <p class="msv">Mã sinh viên: <span>2121051202</span></p>
       <p class="nhom">Nhóm: <span>13</span></p>
       <p class="class">Môn: <span>Phát triển ứng dụng Web nhóm 6</span></p>
-      <p class="email">Email: <span></span> </p>
-      <p class="sdt">Điện thoại: <span></span> </p>
+      <p class="sdt">Điện thoại: <span>0337547497</span> </p>
+      <p class="email">Email: <span>vuthingoc2107@gmail.com</span> </p>
     </div>
   </div>
   <div class="row member">
     <div class="col-4 avt">
-      <img src="" alt="">
+      <img src="../assets/img/member/DucManh.jpg" alt="">
     </div>
 
     <div class="col-8 infor">
@@ -59,8 +59,8 @@
       <p class="msv">Mã sinh viên: <span>2121051233 </span></p>
       <p class="nhom">Nhóm: <span>13</span></p>
       <p class="class">Môn: <span>Phát triển ứng dụng Web nhóm 6</span></p>
-      <p class="email">Email: <span></span> </p>
-      <p class="sdt">Điện thoại: <span></span> </p>
+      <p class="sdt">Điện thoại: <span>0961172755</span> </p>
+      <p class="email">Email: <span>ducmanhhwg4303@gmail.com</span> </p>
     </div>
 
   </div>

@@ -31,26 +31,30 @@
     <div class="row button">
         <div class="col">
             <button>
-                <a href="index.php?categories">All categories</a>
+                <a href="dashboard.php?categories">All categories</a>
             </button>
             
             <button>
-                <a href="index.php?products">All products</a>
+                <a href="dashboard.php?products">All products</a>
             </button>
             <button>
-                <a href="index.php?news">All news</a>
-            </button>
-
-            <button>
-                <a href="#">All order</a>
+                <a href="dashboard.php?news">All news</a>
             </button>
 
             <button>
-                <a href="#">List users</a>
+                <a href="dashboard.php?orders">All orders</a>
             </button>
 
             <button>
-                <a href="index.php?logout">Log out</a>
+                <a href="dashboard.php?users_orders">List of orders users</a>
+            </button>
+
+            <button>
+                <a href="dashboard.php?list_users">List users</a>
+            </button>
+
+            <button>
+                <a href="dashboard.php?logout">Log out</a>
             </button>
         </div>
         </div>
@@ -65,6 +69,15 @@
             }
             elseif(isset($_GET['news'])) {
                 include ('./quanlytintuc/news.php');
+            }
+            elseif(isset($_GET['orders'])) {
+                include ('./quanlydathang/orders.php');
+            }
+            elseif(isset($_GET['users_orders'])) {
+                include ('./quanlydathang/users_orders.php');
+            }
+            elseif(isset($_GET['list_users'])) {
+                include ('./quanlynguoidung/list_users.php');
             }
             ?>
         </div>

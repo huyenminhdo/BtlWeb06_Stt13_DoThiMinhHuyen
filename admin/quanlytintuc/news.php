@@ -49,10 +49,8 @@
         }
     }
 
-        // Xóa dữ liệu
-    // task có thể thay đổi, tự đặt có thể là tên khác
+    
     // Xóa dữ liệu
-    // task có thể thay đổi, tự đặt có thể là tên khác
     if(isset($_GET["news"]) && $_GET["news"]=="delete") {
         $new_id = $_GET["id"];
         $sql_delete = "delete from tbl_news where new_id = " .$new_id;
