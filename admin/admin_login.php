@@ -9,7 +9,7 @@
         if(mysqli_num_rows($result)>0) {
             // lưu tên người dùng
             $_SESSION["ad_name"] = $adname; 
-            header("location:index.php");
+            header("location:dashboard.php");
             // echo "Xin chào admin " $adname;
         }
         else{
