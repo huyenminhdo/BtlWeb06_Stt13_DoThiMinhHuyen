@@ -15,7 +15,7 @@
         $sql_update = "update `tbl_product` set product_price = N'".$product_price."', product_quantity = ".$product_quantity.", status = ".$status." where product_id =" .$product_id;
         if (mysqli_query($conn, $sql_update)) {
             echo "<script>alert('Đã cập nhật thành công')</script>";
-            header("location:../index.php?products");
+            header("location:../dashboard.php?products");
             // echo "New record created successfully";
         }
         else {
@@ -24,7 +24,7 @@
     }
 
     if(isset($_POST["btn_cancel"])) {
-        header("location:../index.php?products");
+        header("location:../dashboard.php?products");
     }
 
 ?>
