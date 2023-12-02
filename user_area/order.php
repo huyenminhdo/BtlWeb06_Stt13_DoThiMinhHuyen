@@ -16,7 +16,7 @@
     $order_payment_method = $_POST['payment'];
 
     // mã hóa đơn ngẫu nhiên
-    $order_code = mt_rand(0,99999999);
+    $order_code = mt_rand();
 
 
     // Liên hệ người dùng
@@ -113,55 +113,8 @@
 
             <div class="row content-order">
                 <?php
-                echo"
-                     <table class='table'>
-                     <thead>
-                         <tr>
-                             <th class = 'infor order-code'>Mã đơn hàng</th>
-                             <th class = 'infor order-name'>Họ tên</th>
-                             <th class = 'infor order-phone'>Điện thoại</th>
-                             <th class = 'infor order-date'>Ngày đặt</th>
-                             <th class = 'infor order-total'>Thành tiền</th>
-                             <th class = 'infor order-add'>Địa chỉ</th>
-                             <th class = 'infor order-note'>Ghi chú</th>
-                         </tr>
-                     </thead>
-                     <tbody>";
-
-                if(isset($_GET['user_id'])) {
-                    $user_id = $_GET['user_id'];
-                    $sql_order = "SELECT * FROM `tbl_order` where user_id = $user_id";
-                    $result_order = mysqli_query($conn, $sql_order);
-                    while($row=mysqli_fetch_array($result_order)) {
-                        $status = $row['order_status'];
-                        $order_date = $row['order_date'];
-                        $order_total_price = $row['total_price'];
-                        $order_code = $row['order_code'];
-                        $order_id =$row['order_id'];
-                        $sql_contact = "SELECT * FROM `tbl_user_contact` where order_code = $order_code";
-                        $result_contact = mysqli_query($conn, $sql_contact);
-                        while($row=mysqli_fetch_array($result_contact)) {
-                            $user_name = $row['user_name'];
-                            $user_phone = $row['user_phone'];
-                            $user_email = $row['user_email'];
-                            $user_add = $row['user_address'];
-                            $user_note = $row['user_note'];
-                            echo "
-                            <tr>
-                                <td class= 'order'>$order_code</td>
-                                <td class= 'order'>$user_name</td>
-                                <td class= 'order'>$user_phone</td>
-                                <td class= 'order'>$order_date</td>
-                                <td class= 'order'>".number_format($order_total_price, 0, ',', '.')." VND</td>
-                                <td class= 'order'>$user_add</td>
-                                <td class= 'order'>$user_note</td>
-                            </tr>";
-                        }
-                    }
-                echo "
-                        </tbody>
-                    </table>";
-                }
+                // chi tiết đơn hàng người dùng đặt
+                    get_user_order_detail();
                 ?>
             </div>
 
