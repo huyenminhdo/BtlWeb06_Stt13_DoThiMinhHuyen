@@ -38,7 +38,7 @@
            
     </head>
 
-    <body>
+    <body style = "background-color: antiquewhite;">
         <div class="container">
             <h1>Cập nhật sản phẩm</h1>
             <div class="row">
