@@ -12,7 +12,7 @@
         $sql_update = "update tbl_category set cate_name = N'".$cate_name."', status = ".$status." where cate_id =" .$cate_id;
         if (mysqli_query($conn, $sql_update)) {
             echo "<script>alert('Đã cập nhật thành công')</script>";
-            header("location:../index.php?categories");
+            header("location:../dashboard.php?categories");
             // echo "New record created successfully";
         }
         else {
@@ -21,7 +21,7 @@
     }
 
     if(isset($_POST["btn_cancel"])) {
-        header("location:../index.php?categories");
+        header("location:../dashboard.php?categories");
     }
     }
 ?>
