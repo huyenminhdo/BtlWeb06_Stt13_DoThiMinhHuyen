@@ -30,7 +30,7 @@
       <p class="name">Họ tên: <span> </span>Đỗ Thị Minh Huyền</p>
       <p class="msv">Mã sinh viên: <span>2121051221</span></p>
       <p class="nhom">Nhóm: <span>13</span></p>
-      <p class="class">Phát triển ứng dụng Web: <span>nhóm 6</span></p>
+      <p class="class">Môn: <span>Phát triển ứng dụng Web nhóm 6</span></p>
       <p class="email">Email: <span>dohuyen477@gmail.com</span> </p>
       <p class="sdt">Điện thoại: <span>0358570803</span></p>
     </div>
@@ -42,9 +42,9 @@
 
     <div class="col-8 infor">
       <p class="name">Họ tên: <span> </span>Vũ Thị Ngọc</p>
-      <p class="msv">Mã sinh viên: <span> </span></p>
+      <p class="msv">Mã sinh viên: <span>2121051202</span></p>
       <p class="nhom">Nhóm: <span>13</span></p>
-      <p class="class">Phát triển ứng dụng Web: <span>nhóm 6</span></p>
+      <p class="class">Môn: <span>Phát triển ứng dụng Web nhóm 6</span></p>
       <p class="email">Email: <span></span> </p>
       <p class="sdt">Điện thoại: <span></span> </p>
     </div>
@@ -56,9 +56,9 @@
 
     <div class="col-8 infor">
       <p class="name">Họ tên: <span> </span>Hoàng Đức Mạnh</p>
-      <p class="msv">Mã sinh viên: <span> </span></p>
+      <p class="msv">Mã sinh viên: <span>2121051233 </span></p>
       <p class="nhom">Nhóm: <span>13</span></p>
-      <p class="class">Phát triển ứng dụng Web: <span>nhóm 6</span></p>
+      <p class="class">Môn: <span>Phát triển ứng dụng Web nhóm 6</span></p>
       <p class="email">Email: <span></span> </p>
       <p class="sdt">Điện thoại: <span></span> </p>
     </div>
