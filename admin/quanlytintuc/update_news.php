@@ -42,7 +42,7 @@
             <title>Update New</title>
     </head>
 
-    <body>
+    <body style = "background-color: antiquewhite;">
         <div class="container">
             <h3>Cập nhật tin tức</h1>
             <div class="row">
