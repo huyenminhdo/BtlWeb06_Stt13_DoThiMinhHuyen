@@ -17,7 +17,7 @@
         $sql_update = "update `tbl_news` set title = N'".$title."', cont1 = '$cont1', cont2 = '$cont2', cont3 = '$cont3', status = ".$status." where new_id =" .$new_id;
         if (mysqli_query($conn, $sql_update)) {
             echo "<script>alert('Đã cập nhật thành công')</script>";
-            header("location:../index.php?news");
+            header("location:../dashboard.php?news");
             // echo "New record created successfully";
         }
         else {
@@ -26,7 +26,7 @@
     }
 
     if(isset($_POST["btn_cancel"])) {
-        header("location:../index.php?news");
+        header("location:../dashboard.php?news");
         
     }
 
