@@ -24,7 +24,7 @@ Phân công nhiệm vụ:
         + news
         + product_detail
         + thanh toán 
-        + đơn hàng
+        + đặt hàng
         + Admin
             ~ Thêm, xóa sản phẩm
             ~ Thêm, xóa danh mục
