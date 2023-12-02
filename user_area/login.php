@@ -10,8 +10,8 @@
         $result = mysqli_query($conn,$sql);
         $row_data = mysqli_fetch_assoc($result);
         $user_ip = getIPAddress();
-        // cart item
-        $sql = "select * from tbl_cart_detail where ip_address ='$user_ip'";
+        
+        $sql = "select * from tbl_users where user_ip ='$user_ip'";
         $result = mysqli_query($conn,$sql);
 
         if(mysqli_num_rows($result)>0) {    
