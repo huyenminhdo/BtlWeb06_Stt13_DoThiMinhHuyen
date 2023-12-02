@@ -614,21 +614,31 @@
 
         // function to get cart item numbers
         function cart_item() {
+            $total_quantity = 0;
             if(isset($_GET['add_to_cart'])) {
                 global $conn;
                 $get_ip_add = getIPAddress();
                 $select_query = "SELECT * from  `tbl_cart_detail` where ip_address='$get_ip_add'";
                 $result_query = mysqli_query($conn, $select_query);
-                $count_cart_item = mysqli_num_rows($result_query);
+                // tổng số sản phẩm
+                while($row=mysqli_fetch_array($result_query)) {
+                    $quantiy = array(($row['quantity']));
+                    $quantity_value = array_sum($quantiy);
+                    $total_quantity += $quantity_value;
+                }
             }
             else {
                 global $conn;
                 $get_ip_add = getIPAddress();
                 $select_query = "SELECT * from  `tbl_cart_detail` where ip_address='$get_ip_add'";
                 $result_query = mysqli_query($conn, $select_query);
-                $count_cart_item = mysqli_num_rows($result_query);
-                }
-            echo $count_cart_item;
+                // tổng số sản phẩm
+                while($row=mysqli_fetch_array($result_query)) {
+                    $quantiy = array(($row['quantity']));
+                    $quantity_value = array_sum($quantiy);
+                    $total_quantity += $quantity_value;                }
+            }
+            echo $total_quantity;
         }
         
         // total price function
@@ -687,6 +697,60 @@
                 }
         
             } 
+        }
+
+        // chi tiết người dùng đặt hàng
+        function get_user_order_detail() {
+            global $conn;
+            echo"
+                     <table class='table'>
+                     <thead>
+                         <tr>
+                             <th class = 'infor order-code'>Mã đơn hàng</th>
+                             <th class = 'infor order-name'>Họ tên</th>
+                             <th class = 'infor order-phone'>Điện thoại</th>
+                             <th class = 'infor order-date'>Ngày đặt</th>
+                             <th class = 'infor order-total'>Thành tiền</th>
+                             <th class = 'infor order-add'>Địa chỉ</th>
+                             <th class = 'infor order-note'>Ghi chú</th>
+                         </tr>
+                     </thead>
+                     <tbody>";
+
+                if(isset($_GET['user_id'])) {
+                    $user_id = $_GET['user_id'];
+                    $sql_order = "SELECT * FROM `tbl_order` where user_id = $user_id";
+                    $result_order = mysqli_query($conn, $sql_order);
+                    while($row=mysqli_fetch_array($result_order)) {
+                        $status = $row['order_status'];
+                        $order_date = $row['order_date'];
+                        $order_total_price = $row['total_price'];
+                        $order_code = $row['order_code'];
+                        $order_id =$row['order_id'];
+                        $sql_contact = "SELECT * FROM `tbl_user_contact` where order_code = $order_code";
+                        $result_contact = mysqli_query($conn, $sql_contact);
+                        while($row=mysqli_fetch_array($result_contact)) {
+                            $user_name = $row['user_name'];
+                            $user_phone = $row['user_phone'];
+                            $user_email = $row['user_email'];
+                            $user_add = $row['user_address'];
+                            $user_note = $row['user_note'];
+                            echo "
+                            <tr>
+                                <td class= 'order'>$order_code</td>
+                                <td class= 'order'>$user_name</td>
+                                <td class= 'order'>$user_phone</td>
+                                <td class= 'order'>$order_date</td>
+                                <td class= 'order'>".number_format($order_total_price, 0, ',', '.')." VND</td>
+                                <td class= 'order'>$user_add</td>
+                                <td class= 'order'>$user_note</td>
+                            </tr>";
+                        }
+                    }
+                echo "
+                        </tbody>
+                    </table>";
+                }
         }
 
     ?>
