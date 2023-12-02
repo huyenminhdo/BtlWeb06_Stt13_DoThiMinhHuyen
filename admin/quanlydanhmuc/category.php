@@ -119,7 +119,7 @@
                         <!-- Form bao trọn table -->
                         <form action="./index.php?categories" method="post">
                             <input type="submit" value="Xóa theo lựa chọn" name = "delete_check" class="btn btn-info"> 
-                            <input type="submit" value="Xóa tất cả" name="delete_all" class="btn btn-primary">
+                            <!-- <input type="submit" value="Xóa tất cả" name="delete_all" class="btn btn-primary"> -->
                             <?php
                                 $sql = "";
                                 if(isset($_POST["btn_search"])) {
