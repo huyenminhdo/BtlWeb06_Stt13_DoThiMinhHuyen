@@ -1,6 +1,8 @@
+.admin {
+    background-color: antiquewhite;
+}
 .button {
     text-align: center;
-    /* display: flex; */
     justify-content: space-evenly;
     display: inline;
 }
@@ -9,11 +11,14 @@ button {
     background-color: aliceblue;
     border: none;
     padding: 10px;
+    background-color: #f15e2c;
 }
 
 button a {
     text-decoration: none;
-    color: #f15e2c;
+    /* color: #f15e2c; */
+    color: #fff;
+
     font-size: 20px;
 }
 
