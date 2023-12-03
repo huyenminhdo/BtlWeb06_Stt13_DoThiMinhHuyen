@@ -18,7 +18,7 @@
         $news_img3 = $_FILES['news_img3']['name'];
 
         //upload img
-        $target_dir = "upload/";
+        $target_dir = "./quanlytintuc/upload/";
         $target_file1 = $target_dir . basename($_FILES["img_avt"]["name"]);
         $imageFileType1 = strtolower(pathinfo($target_file1,PATHINFO_EXTENSION));
         

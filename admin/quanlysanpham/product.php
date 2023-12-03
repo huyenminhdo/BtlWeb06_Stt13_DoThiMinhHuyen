@@ -16,7 +16,7 @@
         $prd_img_hover = $_FILES['prd_img_hover']['name'];
 
         //upload img
-        $target_dir = "upload/";
+        $target_dir = "./quanlysanpham/upload/";
         $target_file1 = $target_dir . basename($_FILES["prd_img"]["name"]);
         $imageFileType1 = strtolower(pathinfo($target_file1,PATHINFO_EXTENSION));
         
