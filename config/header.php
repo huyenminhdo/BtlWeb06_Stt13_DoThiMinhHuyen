@@ -23,8 +23,7 @@
                 <a href="../page/cart.php">
                   <img src="../assets/img/header/menu/icon_gio_hang.svg" alt="">
                   Giỏ hàng (<?php
-                    if (!isset($_SESSION['username'])) {echo"0";
-                    header("location:../user_area/login.php");}
+                    if (!isset($_SESSION['username'])) {echo"0";}
                     else{ cart_item(); cart();}?>)
                 </a>
               </li>
