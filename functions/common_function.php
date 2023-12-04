@@ -589,7 +589,7 @@
             if(isset($_GET['add_to_cart'])) {
                 global $conn;
                 if (!isset($_SESSION['username'])) {
-                    header(location: "../user_area/login/php");
+                    header("location:../user_area/login/php");
                 }
                 else {
                     $get_ip_add = getIPAddress();
